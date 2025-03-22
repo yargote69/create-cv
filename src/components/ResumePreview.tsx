@@ -106,7 +106,7 @@ export const ResumePreview: React.FC<ResumePreviewProps> = ({ data, onBack }) =>
         <button
           type="button"
           onClick={handleDownload}
-          className="px-4 py-2 text-sm font-medium text-white bg-primary-600 border border-transparent rounded-md shadow-sm hover:bg-primary-700"
+          className="px-4 py-2 text-sm font-medium text-white bg-blue-600 border border-transparent rounded-md shadow-sm hover:bg-blue-700"
         >
           Download PDF
         </button>
