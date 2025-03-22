@@ -1,4 +1,4 @@
-import React from 'react';
+import type React from 'react';
 
 interface ProfessionalSummaryProps {
   data: string;
@@ -9,7 +9,7 @@ export const ProfessionalSummary: React.FC<ProfessionalSummaryProps> = ({ data, 
   return (
     <div className="space-y-6">
       <h2 className="text-xl font-semibold text-gray-900">Professional Summary</h2>
-      
+
       <div>
         <label htmlFor="summary" className="block text-sm font-medium text-gray-700 mb-2">
           Write a brief summary of your professional background and key qualifications

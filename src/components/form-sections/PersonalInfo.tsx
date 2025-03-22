@@ -1,8 +1,20 @@
-import React from 'react';
+import type React from 'react';
 
 interface PersonalInfoProps {
-  data: any;
-  updateData: (data: any) => void;
+  data: {
+    firstName: string;
+    lastName: string;
+    email: string;
+    phone: string;
+    location: string;
+  };
+  updateData: (data: {
+    firstName: string;
+    lastName: string;
+    email: string;
+    phone: string;
+    location: string;
+  }) => void;
 }
 
 export const PersonalInfo: React.FC<PersonalInfoProps> = ({ data, updateData }) => {
@@ -16,7 +28,7 @@ export const PersonalInfo: React.FC<PersonalInfoProps> = ({ data, updateData }) 
   return (
     <div className="space-y-6">
       <h2 className="text-xl font-semibold text-gray-900">Personal Information</h2>
-      
+
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
         <div>
           <label htmlFor="firstName" className="block text-sm font-medium text-gray-700">

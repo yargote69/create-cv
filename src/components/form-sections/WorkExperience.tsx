@@ -1,6 +1,6 @@
-import React from 'react';
+import type React from 'react';
 
-interface WorkExperienceEntry {
+export interface WorkExperienceEntry {
   id: string;
   title: string;
   company: string;
@@ -54,7 +54,7 @@ export const WorkExperience: React.FC<WorkExperienceProps> = ({ data = [], updat
     updateData([...data, newEntry]);
   };
 
-  const updateEntry = (index: number, field: keyof WorkExperienceEntry, value: any) => {
+  const updateEntry = (index: number, field: keyof WorkExperienceEntry, value: string | boolean) => {
     const updatedData = [...data];
     updatedData[index] = {
       ...updatedData[index],
@@ -97,8 +97,9 @@ export const WorkExperience: React.FC<WorkExperienceProps> = ({ data = [], updat
   const updateProject = (entryIndex: number, projectIndex: number, field: string, value: string) => {
     const updatedData = [...data];
     if (updatedData[entryIndex].projects?.[projectIndex]) {
-      updatedData[entryIndex].projects![projectIndex] = {
-        ...updatedData[entryIndex].projects![projectIndex],
+      updatedData[entryIndex].projects = updatedData[entryIndex].projects || [];
+      updatedData[entryIndex].projects[projectIndex] = {
+        ...updatedData[entryIndex].projects[projectIndex],
         [field]: value
       };
     }
@@ -128,8 +129,9 @@ export const WorkExperience: React.FC<WorkExperienceProps> = ({ data = [], updat
   const updateCertificate = (entryIndex: number, certIndex: number, field: string, value: string) => {
     const updatedData = [...data];
     if (updatedData[entryIndex].certificates?.[certIndex]) {
-      updatedData[entryIndex].certificates![certIndex] = {
-        ...updatedData[entryIndex].certificates![certIndex],
+      updatedData[entryIndex].certificates = updatedData[entryIndex].certificates || [];
+      updatedData[entryIndex].certificates[certIndex] = {
+        ...updatedData[entryIndex].certificates[certIndex],
         [field]: value
       };
     }
@@ -150,9 +152,9 @@ export const WorkExperience: React.FC<WorkExperienceProps> = ({ data = [], updat
   return (
     <div className="space-y-8">
       <h2 className="text-xl font-semibold text-gray-900">Work Experience</h2>
-      
+
       {data.map((entry, index) => (
-        <div key={entry.id} className="space-y-6 bg-gray-50 p-6 rounded-lg">
+        <div key={`${entry.id}-${index}`} className="space-y-6 bg-gray-50 p-6 rounded-lg">
           <div className="flex justify-between items-center">
             <h3 className="text-lg font-medium text-gray-900">Position {index + 1}</h3>
             <button
@@ -166,8 +168,9 @@ export const WorkExperience: React.FC<WorkExperienceProps> = ({ data = [], updat
 
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
             <div>
-              <label className="block text-sm font-medium text-gray-700">Job Title</label>
+              <label htmlFor={`title-${entry.id}`} className="block text-sm font-medium text-gray-700">Job Title</label>
               <input
+                id={`title-${entry.id}`}
                 type="text"
                 value={entry.title}
                 onChange={(e) => updateEntry(index, 'title', e.target.value)}
@@ -176,8 +179,9 @@ export const WorkExperience: React.FC<WorkExperienceProps> = ({ data = [], updat
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700">Company</label>
+              <label htmlFor={`company-${entry.id}`} className="block text-sm font-medium text-gray-700">Company</label>
               <input
+                id={`company-${entry.id}`}
                 type="text"
                 value={entry.company}
                 onChange={(e) => updateEntry(index, 'company', e.target.value)}
@@ -186,8 +190,9 @@ export const WorkExperience: React.FC<WorkExperienceProps> = ({ data = [], updat
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700">Company Website</label>
+              <label htmlFor={`companyUrl-${entry.id}`} className="block text-sm font-medium text-gray-700">Company Website</label>
               <input
+                id={`companyUrl-${entry.id}`}
                 type="url"
                 value={entry.companyUrl}
                 onChange={(e) => updateEntry(index, 'companyUrl', e.target.value)}
@@ -197,8 +202,9 @@ export const WorkExperience: React.FC<WorkExperienceProps> = ({ data = [], updat
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700">Company LinkedIn</label>
+              <label htmlFor={`linkedinUrl-${entry.id}`} className="block text-sm font-medium text-gray-700">Company LinkedIn</label>
               <input
+                id={`linkedinUrl-${entry.id}`}
                 type="url"
                 value={entry.linkedinUrl}
                 onChange={(e) => updateEntry(index, 'linkedinUrl', e.target.value)}
@@ -208,8 +214,9 @@ export const WorkExperience: React.FC<WorkExperienceProps> = ({ data = [], updat
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700">Location</label>
+              <label htmlFor={`location-${entry.id}`} className="block text-sm font-medium text-gray-700">Location</label>
               <input
+                id={`location-${entry.id}`}
                 type="text"
                 value={entry.location}
                 onChange={(e) => updateEntry(index, 'location', e.target.value)}
@@ -218,8 +225,9 @@ export const WorkExperience: React.FC<WorkExperienceProps> = ({ data = [], updat
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700">Start Date</label>
+              <label htmlFor={`startDate-${entry.id}`} className="block text-sm font-medium text-gray-700">Start Date</label>
               <input
+                id={`startDate-${entry.id}`}
                 type="month"
                 value={entry.startDate}
                 onChange={(e) => updateEntry(index, 'startDate', e.target.value)}
@@ -228,8 +236,9 @@ export const WorkExperience: React.FC<WorkExperienceProps> = ({ data = [], updat
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700">End Date</label>
+              <label htmlFor={`endDate-${entry.id}`} className="block text-sm font-medium text-gray-700">End Date</label>
               <input
+                id={`endDate-${entry.id}`}
                 type="month"
                 value={entry.endDate}
                 disabled={entry.current}
@@ -252,8 +261,9 @@ export const WorkExperience: React.FC<WorkExperienceProps> = ({ data = [], updat
             </div>
 
             <div className="sm:col-span-2">
-              <label className="block text-sm font-medium text-gray-700">Role Overview</label>
+              <label htmlFor={`description-${entry.id}`} className="block text-sm font-medium text-gray-700">Role Overview</label>
               <textarea
+                id={`description-${entry.id}`}
                 rows={2}
                 value={entry.description}
                 onChange={(e) => updateEntry(index, 'description', e.target.value)}
@@ -263,9 +273,9 @@ export const WorkExperience: React.FC<WorkExperienceProps> = ({ data = [], updat
             </div>
 
             <div className="sm:col-span-2">
-              <label className="block text-sm font-medium text-gray-700 mb-2">Key Achievements</label>
+              <label htmlFor={`achievements-${entry.id}`} className="block text-sm font-medium text-gray-700 mb-2">Key Achievements</label>
               {entry.achievements.map((achievement, achievementIndex) => (
-                <div key={achievementIndex} className="flex gap-2 mb-2">
+                <div key={`${entry.id}-achievement-${achievementIndex}`} className="flex gap-2 mb-2">
                   <input
                     type="text"
                     value={achievement}
@@ -292,9 +302,9 @@ export const WorkExperience: React.FC<WorkExperienceProps> = ({ data = [], updat
             </div>
 
             <div className="sm:col-span-2">
-              <label className="block text-sm font-medium text-gray-700 mb-2">Projects</label>
+              <label htmlFor={`projects-${entry.id}`} className="block text-sm font-medium text-gray-700 mb-2">Projects</label>
               {entry.projects?.map((project, projectIndex) => (
-                <div key={projectIndex} className="mb-4 p-4 border border-gray-200 rounded-md">
+                <div key={`${entry.id}-project-${projectIndex}`} className="mb-4 p-4 border border-gray-200 rounded-md">
                   <div className="grid grid-cols-1 gap-4">
                     <input
                       type="text"
@@ -337,9 +347,9 @@ export const WorkExperience: React.FC<WorkExperienceProps> = ({ data = [], updat
             </div>
 
             <div className="sm:col-span-2">
-              <label className="block text-sm font-medium text-gray-700 mb-2">Certificates</label>
+              <label htmlFor={`certificates-${entry.id}`} className="block text-sm font-medium text-gray-700 mb-2">Certificates</label>
               {entry.certificates?.map((cert, certIndex) => (
-                <div key={certIndex} className="mb-4 p-4 border border-gray-200 rounded-md">
+                <div key={`${entry.id}-certificate-${certIndex}`} className="mb-4 p-4 border border-gray-200 rounded-md">
                   <div className="grid grid-cols-1 gap-4">
                     <input
                       type="text"

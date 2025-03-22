@@ -1,6 +1,6 @@
-import React from 'react';
+import type React from 'react';
 
-interface SkillsData {
+export interface SkillsData {
   technical: string[];
   soft: string[];
   languages: string[];
@@ -23,10 +23,10 @@ export const Skills: React.FC<SkillsProps> = ({ data = { technical: [], soft: []
   return (
     <div className="space-y-8">
       <h2 className="text-xl font-semibold text-gray-900">Skills & Languages</h2>
-      
+
       <div className="space-y-6">
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label htmlFor="technicalSkills" className="block text-sm font-medium text-gray-700 mb-2">
             Technical Skills
           </label>
           <textarea
@@ -40,7 +40,7 @@ export const Skills: React.FC<SkillsProps> = ({ data = { technical: [], soft: []
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label htmlFor="softSkills" className="block text-sm font-medium text-gray-700 mb-2">
             Soft Skills
           </label>
           <textarea
@@ -54,7 +54,7 @@ export const Skills: React.FC<SkillsProps> = ({ data = { technical: [], soft: []
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label htmlFor="languages" className="block text-sm font-medium text-gray-700 mb-2">
             Languages
           </label>
           <textarea

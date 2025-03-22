@@ -1,28 +1,100 @@
-import React, { useState } from 'react';
-import { PersonalInfo } from './form-sections/PersonalInfo';
-import { ProfessionalSummary } from './form-sections/ProfessionalSummary';
-import { WorkExperience } from './form-sections/WorkExperience';
-import { Education } from './form-sections/Education';
-import { Skills } from './form-sections/Skills';
-import { ResumePreview } from './ResumePreview';
+import type React from "react";
+import { useState } from "react";
+import { ResumePreview } from "./ResumePreview";
+import { Education, type EducationEntry } from "./form-sections/Education";
+import { PersonalInfo } from "./form-sections/PersonalInfo";
+import { ProfessionalSummary } from "./form-sections/ProfessionalSummary";
+import { Skills, type SkillsData } from "./form-sections/Skills";
+import {
+  WorkExperience,
+  type WorkExperienceEntry,
+} from "./form-sections/WorkExperience";
 
-const steps = [
-  { id: 'personal', name: 'Personal Information', component: PersonalInfo },
-  { id: 'summary', name: 'Professional Summary', component: ProfessionalSummary },
-  { id: 'experience', name: 'Work Experience', component: WorkExperience },
-  { id: 'education', name: 'Education', component: Education },
-  { id: 'skills', name: 'Skills & Languages', component: Skills },
+type Personal = {
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string;
+  location: string;
+};
+
+type FormData = {
+  personal: Personal;
+  summary: string;
+  experience: WorkExperienceEntry[];
+  education: EducationEntry[];
+  skills: SkillsData;
+};
+
+type Step =
+  | {
+    id: "personal";
+    name: string;
+    component: React.ComponentType<{
+      data: Personal;
+      updateData: (data: Personal) => void;
+    }>;
+  }
+  | {
+    id: "summary";
+    name: string;
+    component: React.ComponentType<{
+      data: string;
+      updateData: (data: string) => void;
+    }>;
+  }
+  | {
+    id: "experience";
+    name: string;
+    component: React.ComponentType<{
+      data: WorkExperienceEntry[];
+      updateData: (data: WorkExperienceEntry[]) => void;
+    }>;
+  }
+  | {
+    id: "education";
+    name: string;
+    component: React.ComponentType<{
+      data: EducationEntry[];
+      updateData: (data: EducationEntry[]) => void;
+    }>;
+  }
+  | {
+    id: "skills";
+    name: string;
+    component: React.ComponentType<{
+      data: SkillsData;
+      updateData: (data: SkillsData) => void;
+    }>;
+  };
+
+const steps: Step[] = [
+  { id: "personal", name: "Personal Information", component: PersonalInfo },
+  {
+    id: "summary",
+    name: "Professional Summary",
+    component: ProfessionalSummary,
+  },
+  { id: "experience", name: "Work Experience", component: WorkExperience },
+  { id: "education", name: "Education", component: Education },
+  { id: "skills", name: "Skills & Languages", component: Skills },
 ];
 
 export const ResumeForm = () => {
   const [currentStep, setCurrentStep] = useState(0);
   const [showPreview, setShowPreview] = useState(false);
-  const [formData, setFormData] = useState({
-    personal: {},
-    summary: '',
+  const [formData, setFormData] = useState<FormData>({
+    personal: {
+      firstName: "",
+      lastName: "",
+      email: "",
+      phone: "",
+      location: "",
+    },
+    summary: "",
     experience: [],
     education: [],
-    skills: { technical: [], soft: [], languages: [] }
+    skills: { technical: [], soft: [], languages: [] },
   });
 
   const CurrentStepComponent = steps[currentStep].component;
@@ -41,42 +113,57 @@ export const ResumeForm = () => {
     }
   };
 
-  const updateFormData = (section: string, data: any) => {
-    setFormData(prev => ({
+  const updateFormData = <T extends keyof FormData>(
+    section: T,
+    data: FormData[T],
+  ) => {
+    setFormData((prev) => ({
       ...prev,
-      [section]: data
+      [section]: data,
     }));
   };
 
   if (showPreview) {
-    return <ResumePreview data={formData} onBack={() => setShowPreview(false)} />;
+    return (
+      <ResumePreview data={formData} onBack={() => setShowPreview(false)} />
+    );
   }
 
   return (
     <div className="max-w-3xl mx-auto p-6">
       {/* Progress Steps */}
       <nav aria-label="Progress" className="mb-8">
-        <ol role="list" className="flex items-center">
+        <ol className="flex items-center">
           {steps.map((step, index) => (
-            <li key={step.id} className={`relative ${index !== steps.length - 1 ? 'pr-8 sm:pr-20' : ''}`}>
+            <li
+              key={step.id}
+              className={`relative ${index !== steps.length - 1 ? "pr-8 sm:pr-20" : ""}`}
+            >
               <div className="flex items-center">
-                <span className={`h-9 w-9 rounded-full flex items-center justify-center ${
-                  index < currentStep ? 'bg-primary-600' : 
-                  index === currentStep ? 'border-2 border-primary-600' : 
-                  'border-2 border-gray-300'
-                }`}>
-                  <span className={`text-sm ${
-                    index < currentStep ? 'text-white' : 
-                    index === currentStep ? 'text-primary-600' : 
-                    'text-gray-500'
-                  }`}>
+                <span
+                  className={`h-9 w-9 rounded-full flex items-center justify-center ${index < currentStep
+                    ? "bg-primary-600"
+                    : index === currentStep
+                      ? "border-2 border-primary-600"
+                      : "border-2 border-gray-300"
+                    }`}
+                >
+                  <span
+                    className={`text-sm ${index < currentStep
+                      ? "text-white"
+                      : index === currentStep
+                        ? "text-primary-600"
+                        : "text-gray-500"
+                      }`}
+                  >
                     {index + 1}
                   </span>
                 </span>
                 {index !== steps.length - 1 && (
-                  <div className={`absolute top-4 w-full h-0.5 ${
-                    index < currentStep ? 'bg-primary-600' : 'bg-gray-300'
-                  }`} />
+                  <div
+                    className={`absolute top-4 w-full h-0.5 ${index < currentStep ? "bg-primary-600" : "bg-gray-300"
+                      }`}
+                  />
                 )}
               </div>
               <span className="absolute -bottom-6 w-max text-sm font-medium text-gray-500">
@@ -89,9 +176,9 @@ export const ResumeForm = () => {
 
       {/* Form Content */}
       <div className="bg-white rounded-lg shadow-sm p-6 mb-6">
-        <CurrentStepComponent 
-          data={formData[steps[currentStep].id]} 
-          updateData={(data: any) => updateFormData(steps[currentStep].id, data)}
+        <CurrentStepComponent
+          data={formData[steps[currentStep].id] as FormData[Step['id']]}
+          updateData={(data) => updateFormData(steps[currentStep].id, data)}
         />
       </div>
 
@@ -110,7 +197,7 @@ export const ResumeForm = () => {
           onClick={handleNext}
           className="px-4 py-2 text-sm font-medium text-white bg-primary-600 border border-transparent rounded-md shadow-sm hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
         >
-          {currentStep === steps.length - 1 ? 'Preview Resume' : 'Next'}
+          {currentStep === steps.length - 1 ? "Preview Resume" : "Next"}
         </button>
       </div>
     </div>

@@ -1,6 +1,6 @@
-import React from 'react';
+import type React from 'react';
 
-interface EducationEntry {
+export interface EducationEntry {
   id: string;
   degree: string;
   institution: string;
@@ -48,7 +48,7 @@ export const Education: React.FC<EducationProps> = ({ data = [], updateData }) =
   return (
     <div className="space-y-8">
       <h2 className="text-xl font-semibold text-gray-900">Education</h2>
-      
+
       {data.map((entry, index) => (
         <div key={entry.id} className="space-y-6 bg-gray-50 p-6 rounded-lg">
           <div className="flex justify-between items-center">
@@ -64,8 +64,9 @@ export const Education: React.FC<EducationProps> = ({ data = [], updateData }) =
 
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
             <div>
-              <label className="block text-sm font-medium text-gray-700">Degree/Certificate</label>
+              <label htmlFor={`degree-${entry.id}`} className="block text-sm font-medium text-gray-700">Degree/Certificate</label>
               <input
+                id={`degree-${entry.id}`}
                 type="text"
                 value={entry.degree}
                 onChange={(e) => updateEntry(index, 'degree', e.target.value)}
@@ -74,8 +75,9 @@ export const Education: React.FC<EducationProps> = ({ data = [], updateData }) =
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700">Institution</label>
+              <label htmlFor={`institution-${entry.id}`} className="block text-sm font-medium text-gray-700">Institution</label>
               <input
+                id={`institution-${entry.id}`}
                 type="text"
                 value={entry.institution}
                 onChange={(e) => updateEntry(index, 'institution', e.target.value)}
@@ -84,8 +86,9 @@ export const Education: React.FC<EducationProps> = ({ data = [], updateData }) =
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700">Location</label>
+              <label htmlFor={`location-${entry.id}`} className="block text-sm font-medium text-gray-700">Location</label>
               <input
+                id={`location-${entry.id}`}
                 type="text"
                 value={entry.location}
                 onChange={(e) => updateEntry(index, 'location', e.target.value)}
@@ -94,8 +97,9 @@ export const Education: React.FC<EducationProps> = ({ data = [], updateData }) =
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700">Start Date</label>
+              <label htmlFor={`startDate-${entry.id}`} className="block text-sm font-medium text-gray-700">Start Date</label>
               <input
+                id={`startDate-${entry.id}`}
                 type="month"
                 value={entry.startDate}
                 onChange={(e) => updateEntry(index, 'startDate', e.target.value)}
@@ -104,8 +108,9 @@ export const Education: React.FC<EducationProps> = ({ data = [], updateData }) =
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700">End Date</label>
+              <label htmlFor={`endDate-${entry.id}`} className="block text-sm font-medium text-gray-700">End Date</label>
               <input
+                id={`endDate-${entry.id}`}
                 type="month"
                 value={entry.endDate}
                 disabled={entry.current}
@@ -128,9 +133,10 @@ export const Education: React.FC<EducationProps> = ({ data = [], updateData }) =
             </div>
 
             <div className="sm:col-span-2">
-              <label className="block text-sm font-medium text-gray-700">Description</label>
+              <label htmlFor={`description-${entry.id}`} className="block text-sm font-medium text-gray-700">Description</label>
               <textarea
                 rows={4}
+                id={`description-${entry.id}`}
                 value={entry.description}
                 onChange={(e) => updateEntry(index, 'description', e.target.value)}
                 className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500"

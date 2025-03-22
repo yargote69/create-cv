@@ -1,13 +1,54 @@
-import React from 'react';
-import { jsPDF } from 'jspdf';
 import html2canvas from 'html2canvas';
+import { jsPDF } from 'jspdf';
+import type React from 'react';
+
+interface Personal {
+  firstName: string;
+  lastName: string;
+  email?: string;
+  phone?: string;
+  location?: string;
+}
+
+interface Experience {
+  title: string;
+  company?: string;
+  companyUrl?: string;
+  startDate: string;
+  endDate?: string;
+  current?: boolean;
+  location?: string;
+  description?: string;
+  achievements?: string[];
+  projects?: Array<{
+    name: string;
+    url?: string;
+    description?: string;
+  }>;
+  certificates?: Array<{
+    name: string;
+    url?: string;
+    issuer?: string;
+    date?: string;
+  }>;
+}
+
+interface Education {
+  degree: string;
+  institution?: string;
+  startDate: string;
+  endDate?: string;
+  current?: boolean;
+  location?: string;
+  description?: string;
+}
 
 interface ResumePreviewProps {
   data: {
-    personal: any;
+    personal: Personal;
     summary: string;
-    experience: any[];
-    education: any[];
+    experience: Experience[];
+    education: Education[];
     skills: {
       technical: string[];
       soft: string[];
@@ -56,12 +97,14 @@ export const ResumePreview: React.FC<ResumePreviewProps> = ({ data, onBack }) =>
     <div className="space-y-6">
       <div className="flex justify-between items-center">
         <button
+          type="button"
           onClick={onBack}
           className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50"
         >
           Back to Edit
         </button>
         <button
+          type="button"
           onClick={handleDownload}
           className="px-4 py-2 text-sm font-medium text-white bg-primary-600 border border-transparent rounded-md shadow-sm hover:bg-primary-700"
         >
@@ -94,8 +137,8 @@ export const ResumePreview: React.FC<ResumePreviewProps> = ({ data, onBack }) =>
         {data.experience.length > 0 && (
           <div className="mb-6">
             <h2 className="text-lg font-bold uppercase border-b-2 border-gray-300 mb-2 pb-1">Experience</h2>
-            {data.experience.map((exp, index) => (
-              <div key={index} className="mb-4">
+            {data.experience.map((exp) => (
+              <div key={`${exp.title}-${exp.company || 'no-company'}`} className="mb-4">
                 <div className="flex justify-between items-baseline">
                   <div>
                     <span className="font-bold">{exp.title}</span>
@@ -119,23 +162,23 @@ export const ResumePreview: React.FC<ResumePreviewProps> = ({ data, onBack }) =>
                 </div>
                 {exp.location && <div className="text-sm italic">{exp.location}</div>}
                 {exp.description && <p className="text-sm mt-1">{exp.description}</p>}
-                
+
                 {/* Achievements */}
-                {exp.achievements?.length > 0 && (
+                {exp.achievements && exp.achievements.length > 0 && (
                   <ul className="list-disc list-inside mt-2 text-sm">
-                    {exp.achievements.map((achievement, i) => (
-                      <li key={i} className="mb-1">{achievement}</li>
+                    {exp.achievements.map((achievement) => (
+                      <li key={`achievement-${achievement}`} className="mb-1">{achievement}</li>
                     ))}
                   </ul>
                 )}
 
                 {/* Projects */}
-                {exp.projects?.length > 0 && (
+                {exp.projects && exp.projects.length > 0 && (
                   <div className="mt-2">
                     <h4 className="text-sm font-semibold">Key Projects:</h4>
                     <ul className="list-disc list-inside text-sm">
-                      {exp.projects.map((project, i) => (
-                        <li key={i} className="mb-1">
+                      {exp.projects.map((project) => (
+                        <li key={`project-${project.name}`} className="mb-1">
                           {project.url ? (
                             <a href={project.url} target="_blank" rel="noopener noreferrer" className="text-primary-600 hover:underline">
                               {project.name}
@@ -151,12 +194,12 @@ export const ResumePreview: React.FC<ResumePreviewProps> = ({ data, onBack }) =>
                 )}
 
                 {/* Certificates */}
-                {exp.certificates?.length > 0 && (
+                {exp.certificates && exp.certificates.length > 0 && (
                   <div className="mt-2">
                     <h4 className="text-sm font-semibold">Certificates:</h4>
                     <ul className="list-disc list-inside text-sm">
-                      {exp.certificates.map((cert, i) => (
-                        <li key={i} className="mb-1">
+                      {exp.certificates.map((cert) => (
+                        <li key={`cert-${cert.name}`} className="mb-1">
                           {cert.url ? (
                             <a href={cert.url} target="_blank" rel="noopener noreferrer" className="text-primary-600 hover:underline">
                               {cert.name}
@@ -180,8 +223,8 @@ export const ResumePreview: React.FC<ResumePreviewProps> = ({ data, onBack }) =>
         {data.education.length > 0 && (
           <div className="mb-6">
             <h2 className="text-lg font-bold uppercase border-b-2 border-gray-300 mb-2 pb-1">Education</h2>
-            {data.education.map((edu, index) => (
-              <div key={index} className="mb-4">
+            {data.education.map((edu) => (
+              <div key={`${edu.degree}-${edu.institution || 'no-institution'}`} className="mb-4">
                 <div className="flex justify-between items-baseline">
                   <div>
                     <span className="font-bold">{edu.degree}</span>
