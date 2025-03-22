@@ -1,5 +1,3 @@
-import html2canvas from 'html2canvas';
-import { jsPDF } from 'jspdf';
 import type React from 'react';
 
 interface Personal {
@@ -60,33 +58,84 @@ interface ResumePreviewProps {
 
 export const ResumePreview: React.FC<ResumePreviewProps> = ({ data, onBack }) => {
   const handleDownload = async () => {
-    const element = document.getElementById('resume-preview');
-    if (!element) return;
-
     try {
-      const canvas = await html2canvas(element, {
-        scale: 2,
-        logging: false,
-        useCORS: true
+      // Create a temporary URL for the resume content
+      const resumeContent = document.getElementById('resume-preview')?.innerHTML;
+      if (!resumeContent) return;
+
+      // Create a blob with the HTML content
+      const blob = new Blob([resumeContent], { type: 'text/html' });
+      const url = URL.createObjectURL(blob);
+
+      // Create a temporary iframe to render the content
+      const iframe = document.createElement('iframe');
+      iframe.style.display = 'none';
+      iframe.src = url;
+      document.body.appendChild(iframe);
+
+      // Wait for the content to load
+      await new Promise(resolve => {
+        iframe.onload = resolve;
       });
 
-      const imgData = canvas.toDataURL('image/jpeg', 1.0);
-      const pdf = new jsPDF({
-        orientation: 'portrait',
-        unit: 'px',
-        format: 'a4'
-      });
+      // Get the content window
+      const contentWindow = iframe.contentWindow;
+      if (!contentWindow) return;
 
-      const pdfWidth = pdf.internal.pageSize.getWidth();
-      const pdfHeight = pdf.internal.pageSize.getHeight();
-      const imgWidth = canvas.width;
-      const imgHeight = canvas.height;
-      const ratio = Math.min(pdfWidth / imgWidth, pdfHeight / imgHeight);
-      const imgX = (pdfWidth - imgWidth * ratio) / 2;
-      const imgY = 30;
+      // Create a new window with the content
+      const printWindow = window.open('', '_blank');
+      if (!printWindow) return;
 
-      pdf.addImage(imgData, 'JPEG', imgX, imgY, imgWidth * ratio, imgHeight * ratio);
-      pdf.save('resume.pdf');
+      // Copy the styles from the main document
+      const styles = Array.from(document.styleSheets)
+        .map(sheet => {
+          try {
+            return Array.from(sheet.cssRules)
+              .map(rule => rule.cssText)
+              .join('\n');
+          } catch (e) {
+            return '';
+          }
+        })
+        .join('\n');
+
+      // Write the content to the new window
+      printWindow.document.write(`
+        <!DOCTYPE html>
+        <html>
+          <head>
+            <title>Resume</title>
+            <style>
+              ${styles}
+              @media print {
+                body {
+                  margin: 0;
+                  padding: 0;
+                  background: white;
+                }
+                #resume-preview {
+                  box-shadow: none;
+                  padding: 0;
+                }
+              }
+            </style>
+          </head>
+          <body>
+            ${resumeContent}
+          </body>
+        </html>
+      `);
+
+      // Wait for styles to be applied
+      await new Promise(resolve => setTimeout(resolve, 100));
+
+      // Print the content
+      printWindow.print();
+
+      // Clean up
+      printWindow.close();
+      document.body.removeChild(iframe);
+      URL.revokeObjectURL(url);
     } catch (error) {
       console.error('Error generating PDF:', error);
       alert('There was an error generating the PDF. Please try again.');
