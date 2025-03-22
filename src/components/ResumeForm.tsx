@@ -132,41 +132,41 @@ export const ResumeForm = () => {
   return (
     <div className="max-w-3xl mx-auto p-6">
       {/* Progress Steps */}
-      <nav aria-label="Progress" className="mb-8">
-        <ol className="flex items-center">
+      <nav aria-label="Progress" className="mb-12">
+        <ol className="flex items-center justify-between">
           {steps.map((step, index) => (
             <li
               key={step.id}
-              className={`relative ${index !== steps.length - 1 ? "pr-8 sm:pr-20" : ""}`}
+              className="relative flex flex-col items-center"
             >
               <div className="flex items-center">
+                {index !== 0 && (
+                  <div
+                    className={`absolute left-[-100%] top-1/2 w-full h-0.5 -translate-y-1/2 ${index <= currentStep ? "bg-blue-600" : "bg-gray-300"
+                      }`}
+                  />
+                )}
                 <span
-                  className={`h-9 w-9 rounded-full flex items-center justify-center ${index < currentStep
-                    ? "bg-primary-600"
+                  className={`relative z-10 h-9 w-9 rounded-full flex items-center justify-center ${index < currentStep
+                    ? "bg-blue-600"
                     : index === currentStep
-                      ? "border-2 border-primary-600"
-                      : "border-2 border-gray-300"
+                      ? "border-2 border-blue-600 bg-white"
+                      : "border-2 border-gray-300 bg-white"
                     }`}
                 >
                   <span
-                    className={`text-sm ${index < currentStep
+                    className={`text-sm font-medium ${index < currentStep
                       ? "text-white"
                       : index === currentStep
-                        ? "text-primary-600"
+                        ? "text-blue-600"
                         : "text-gray-500"
                       }`}
                   >
                     {index + 1}
                   </span>
                 </span>
-                {index !== steps.length - 1 && (
-                  <div
-                    className={`absolute top-4 w-full h-0.5 ${index < currentStep ? "bg-primary-600" : "bg-gray-300"
-                      }`}
-                  />
-                )}
               </div>
-              <span className="absolute -bottom-6 w-max text-sm font-medium text-gray-500">
+              <span className="absolute top-14 text-sm font-medium text-gray-900 whitespace-nowrap">
                 {step.name}
               </span>
             </li>
@@ -177,7 +177,7 @@ export const ResumeForm = () => {
       {/* Form Content */}
       <div className="bg-white rounded-lg shadow-sm p-6 mb-6">
         <CurrentStepComponent
-          data={formData[steps[currentStep].id] as FormData[Step['id']]}
+          data={formData[steps[currentStep].id] as FormData[typeof steps[number]["id"]]}
           updateData={(data) => updateFormData(steps[currentStep].id, data)}
         />
       </div>
@@ -188,14 +188,14 @@ export const ResumeForm = () => {
           type="button"
           onClick={handlePrevious}
           disabled={currentStep === 0}
-          className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 disabled:opacity-50"
+          className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50"
         >
           Previous
         </button>
         <button
           type="button"
           onClick={handleNext}
-          className="px-4 py-2 text-sm font-medium text-white bg-primary-600 border border-transparent rounded-md shadow-sm hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
+          className="px-4 py-2 text-sm font-medium text-white bg-blue-600 border border-transparent rounded-md shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
         >
           {currentStep === steps.length - 1 ? "Preview Resume" : "Next"}
         </button>
