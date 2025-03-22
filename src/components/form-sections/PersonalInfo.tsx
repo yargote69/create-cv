@@ -40,7 +40,7 @@ export const PersonalInfo: React.FC<PersonalInfoProps> = ({ data, updateData }) 
             id="firstName"
             value={data?.firstName || ''}
             onChange={handleChange}
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500"
+            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
             required
           />
         </div>
@@ -55,7 +55,7 @@ export const PersonalInfo: React.FC<PersonalInfoProps> = ({ data, updateData }) 
             id="lastName"
             value={data?.lastName || ''}
             onChange={handleChange}
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500"
+            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
             required
           />
         </div>
@@ -70,7 +70,7 @@ export const PersonalInfo: React.FC<PersonalInfoProps> = ({ data, updateData }) 
             id="email"
             value={data?.email || ''}
             onChange={handleChange}
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500"
+            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
             required
           />
         </div>
@@ -85,7 +85,7 @@ export const PersonalInfo: React.FC<PersonalInfoProps> = ({ data, updateData }) 
             id="phone"
             value={data?.phone || ''}
             onChange={handleChange}
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500"
+            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
           />
         </div>
 
@@ -100,7 +100,7 @@ export const PersonalInfo: React.FC<PersonalInfoProps> = ({ data, updateData }) 
             value={data?.location || ''}
             onChange={handleChange}
             placeholder="City, Country"
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500"
+            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
           />
         </div>
       </div>

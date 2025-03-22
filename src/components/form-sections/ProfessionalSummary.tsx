@@ -20,7 +20,7 @@ export const ProfessionalSummary: React.FC<ProfessionalSummaryProps> = ({ data, 
           rows={6}
           value={data || ''}
           onChange={(e) => updateData(e.target.value)}
-          className="block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500"
+          className="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
           placeholder="e.g., Experienced software developer with 5+ years of expertise in web development..."
         />
       </div>

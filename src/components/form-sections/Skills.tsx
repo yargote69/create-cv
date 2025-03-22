@@ -33,7 +33,7 @@ export const Skills: React.FC<SkillsProps> = ({ data = { technical: [], soft: []
             rows={3}
             defaultValue={data.technical.join(', ')}
             onBlur={(e) => handleSkillChange('technical', e.target.value)}
-            className="block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500"
+            className="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
             placeholder="e.g., JavaScript, React, Node.js, Python..."
           />
           <p className="mt-1 text-sm text-gray-500">Separate skills with commas</p>
@@ -47,7 +47,7 @@ export const Skills: React.FC<SkillsProps> = ({ data = { technical: [], soft: []
             rows={3}
             defaultValue={data.soft.join(', ')}
             onBlur={(e) => handleSkillChange('soft', e.target.value)}
-            className="block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500"
+            className="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
             placeholder="e.g., Leadership, Communication, Problem Solving..."
           />
           <p className="mt-1 text-sm text-gray-500">Separate skills with commas</p>
@@ -61,7 +61,7 @@ export const Skills: React.FC<SkillsProps> = ({ data = { technical: [], soft: []
             rows={3}
             defaultValue={data.languages.join(', ')}
             onBlur={(e) => handleSkillChange('languages', e.target.value)}
-            className="block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500"
+            className="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
             placeholder="e.g., English (Native), Spanish (Fluent), French (Intermediate)..."
           />
           <p className="mt-1 text-sm text-gray-500">Separate languages with commas</p>

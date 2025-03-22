@@ -70,7 +70,7 @@ export const Education: React.FC<EducationProps> = ({ data = [], updateData }) =
                 type="text"
                 value={entry.degree}
                 onChange={(e) => updateEntry(index, 'degree', e.target.value)}
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500"
+                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
               />
             </div>
 
@@ -81,7 +81,7 @@ export const Education: React.FC<EducationProps> = ({ data = [], updateData }) =
                 type="text"
                 value={entry.institution}
                 onChange={(e) => updateEntry(index, 'institution', e.target.value)}
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500"
+                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
               />
             </div>
 
@@ -92,7 +92,7 @@ export const Education: React.FC<EducationProps> = ({ data = [], updateData }) =
                 type="text"
                 value={entry.location}
                 onChange={(e) => updateEntry(index, 'location', e.target.value)}
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500"
+                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
               />
             </div>
 
@@ -103,7 +103,7 @@ export const Education: React.FC<EducationProps> = ({ data = [], updateData }) =
                 type="month"
                 value={entry.startDate}
                 onChange={(e) => updateEntry(index, 'startDate', e.target.value)}
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500"
+                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
               />
             </div>
 
@@ -115,7 +115,7 @@ export const Education: React.FC<EducationProps> = ({ data = [], updateData }) =
                 value={entry.endDate}
                 disabled={entry.current}
                 onChange={(e) => updateEntry(index, 'endDate', e.target.value)}
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500"
+                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
               />
             </div>
 
@@ -125,7 +125,7 @@ export const Education: React.FC<EducationProps> = ({ data = [], updateData }) =
                 id={`current-${entry.id}`}
                 checked={entry.current}
                 onChange={(e) => updateEntry(index, 'current', e.target.checked)}
-                className="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300 rounded"
+                className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
               />
               <label htmlFor={`current-${entry.id}`} className="ml-2 block text-sm text-gray-700">
                 Currently studying
@@ -139,7 +139,7 @@ export const Education: React.FC<EducationProps> = ({ data = [], updateData }) =
                 id={`description-${entry.id}`}
                 value={entry.description}
                 onChange={(e) => updateEntry(index, 'description', e.target.value)}
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500"
+                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
                 placeholder="Add relevant coursework, achievements, or activities..."
               />
             </div>
@@ -150,7 +150,7 @@ export const Education: React.FC<EducationProps> = ({ data = [], updateData }) =
       <button
         type="button"
         onClick={addEntry}
-        className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
+        className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
       >
         Add Education
       </button>
