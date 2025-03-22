@@ -147,7 +147,7 @@ export const ResumePreview: React.FC<ResumePreviewProps> = ({ data, onBack }) =>
                         {' '}
                         at{' '}
                         {exp.companyUrl ? (
-                          <a href={exp.companyUrl} target="_blank" rel="noopener noreferrer" className="text-primary-600 hover:underline">
+                          <a href={exp.companyUrl} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">
                             {exp.company}
                           </a>
                         ) : (
@@ -180,7 +180,7 @@ export const ResumePreview: React.FC<ResumePreviewProps> = ({ data, onBack }) =>
                       {exp.projects.map((project) => (
                         <li key={`project-${project.name}`} className="mb-1">
                           {project.url ? (
-                            <a href={project.url} target="_blank" rel="noopener noreferrer" className="text-primary-600 hover:underline">
+                            <a href={project.url} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">
                               {project.name}
                             </a>
                           ) : (
@@ -201,7 +201,7 @@ export const ResumePreview: React.FC<ResumePreviewProps> = ({ data, onBack }) =>
                       {exp.certificates.map((cert) => (
                         <li key={`cert-${cert.name}`} className="mb-1">
                           {cert.url ? (
-                            <a href={cert.url} target="_blank" rel="noopener noreferrer" className="text-primary-600 hover:underline">
+                            <a href={cert.url} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">
                               {cert.name}
                             </a>
                           ) : (

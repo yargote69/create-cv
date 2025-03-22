@@ -174,7 +174,7 @@ export const WorkExperience: React.FC<WorkExperienceProps> = ({ data = [], updat
                 type="text"
                 value={entry.title}
                 onChange={(e) => updateEntry(index, 'title', e.target.value)}
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-primary-500"
+                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
               />
             </div>
 
@@ -185,7 +185,7 @@ export const WorkExperience: React.FC<WorkExperienceProps> = ({ data = [], updat
                 type="text"
                 value={entry.company}
                 onChange={(e) => updateEntry(index, 'company', e.target.value)}
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-primary-500"
+                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
               />
             </div>
 
@@ -196,7 +196,7 @@ export const WorkExperience: React.FC<WorkExperienceProps> = ({ data = [], updat
                 type="url"
                 value={entry.companyUrl}
                 onChange={(e) => updateEntry(index, 'companyUrl', e.target.value)}
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-primary-500"
+                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
                 placeholder="https://..."
               />
             </div>
@@ -208,7 +208,7 @@ export const WorkExperience: React.FC<WorkExperienceProps> = ({ data = [], updat
                 type="url"
                 value={entry.linkedinUrl}
                 onChange={(e) => updateEntry(index, 'linkedinUrl', e.target.value)}
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-primary-500"
+                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
                 placeholder="https://linkedin.com/company/..."
               />
             </div>
@@ -220,7 +220,7 @@ export const WorkExperience: React.FC<WorkExperienceProps> = ({ data = [], updat
                 type="text"
                 value={entry.location}
                 onChange={(e) => updateEntry(index, 'location', e.target.value)}
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-primary-500"
+                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
               />
             </div>
 
@@ -231,7 +231,7 @@ export const WorkExperience: React.FC<WorkExperienceProps> = ({ data = [], updat
                 type="month"
                 value={entry.startDate}
                 onChange={(e) => updateEntry(index, 'startDate', e.target.value)}
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-primary-500"
+                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
               />
             </div>
 
@@ -243,7 +243,7 @@ export const WorkExperience: React.FC<WorkExperienceProps> = ({ data = [], updat
                 value={entry.endDate}
                 disabled={entry.current}
                 onChange={(e) => updateEntry(index, 'endDate', e.target.value)}
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-primary-500"
+                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
               />
             </div>
 
@@ -253,7 +253,7 @@ export const WorkExperience: React.FC<WorkExperienceProps> = ({ data = [], updat
                 id={`current-${entry.id}`}
                 checked={entry.current}
                 onChange={(e) => updateEntry(index, 'current', e.target.checked)}
-                className="h-4 w-4 text-blue-600 focus:ring-primary-500 border-gray-300 rounded"
+                className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
               />
               <label htmlFor={`current-${entry.id}`} className="ml-2 block text-sm text-gray-700">
                 I currently work here
@@ -267,7 +267,7 @@ export const WorkExperience: React.FC<WorkExperienceProps> = ({ data = [], updat
                 rows={2}
                 value={entry.description}
                 onChange={(e) => updateEntry(index, 'description', e.target.value)}
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-primary-500"
+                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
                 placeholder="Brief overview of your role and responsibilities..."
               />
             </div>
@@ -280,7 +280,7 @@ export const WorkExperience: React.FC<WorkExperienceProps> = ({ data = [], updat
                     type="text"
                     value={achievement}
                     onChange={(e) => updateAchievement(index, achievementIndex, e.target.value)}
-                    className="flex-1 rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-primary-500"
+                    className="flex-1 rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
                     placeholder="Describe a key achievement or responsibility..."
                   />
                   <button
@@ -295,7 +295,7 @@ export const WorkExperience: React.FC<WorkExperienceProps> = ({ data = [], updat
               <button
                 type="button"
                 onClick={() => addAchievement(index)}
-                className="mt-2 text-sm text-blue-600 hover:text-primary-700"
+                className="mt-2 text-sm text-blue-600 hover:text-blue-700"
               >
                 + Add Achievement
               </button>
@@ -310,20 +310,20 @@ export const WorkExperience: React.FC<WorkExperienceProps> = ({ data = [], updat
                       type="text"
                       value={project.name}
                       onChange={(e) => updateProject(index, projectIndex, 'name', e.target.value)}
-                      className="rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-primary-500"
+                      className="rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
                       placeholder="Project name"
                     />
                     <input
                       type="url"
                       value={project.url}
                       onChange={(e) => updateProject(index, projectIndex, 'url', e.target.value)}
-                      className="rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-primary-500"
+                      className="rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
                       placeholder="Project URL"
                     />
                     <textarea
                       value={project.description}
                       onChange={(e) => updateProject(index, projectIndex, 'description', e.target.value)}
-                      className="rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-primary-500"
+                      className="rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
                       placeholder="Project description"
                       rows={2}
                     />
@@ -340,7 +340,7 @@ export const WorkExperience: React.FC<WorkExperienceProps> = ({ data = [], updat
               <button
                 type="button"
                 onClick={() => addProject(index)}
-                className="text-sm text-blue-600 hover:text-primary-700"
+                className="text-sm text-blue-600 hover:text-blue-700"
               >
                 + Add Project
               </button>
@@ -355,27 +355,27 @@ export const WorkExperience: React.FC<WorkExperienceProps> = ({ data = [], updat
                       type="text"
                       value={cert.name}
                       onChange={(e) => updateCertificate(index, certIndex, 'name', e.target.value)}
-                      className="rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-primary-500"
+                      className="rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
                       placeholder="Certificate name"
                     />
                     <input
                       type="text"
                       value={cert.issuer}
                       onChange={(e) => updateCertificate(index, certIndex, 'issuer', e.target.value)}
-                      className="rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-primary-500"
+                      className="rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
                       placeholder="Issuing organization"
                     />
                     <input
                       type="month"
                       value={cert.date}
                       onChange={(e) => updateCertificate(index, certIndex, 'date', e.target.value)}
-                      className="rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-primary-500"
+                      className="rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
                     />
                     <input
                       type="url"
                       value={cert.url}
                       onChange={(e) => updateCertificate(index, certIndex, 'url', e.target.value)}
-                      className="rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-primary-500"
+                      className="rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
                       placeholder="Certificate URL"
                     />
                     <button
@@ -391,7 +391,7 @@ export const WorkExperience: React.FC<WorkExperienceProps> = ({ data = [], updat
               <button
                 type="button"
                 onClick={() => addCertificate(index)}
-                className="text-sm text-blue-600 hover:text-primary-700"
+                className="text-sm text-blue-600 hover:text-blue-700"
               >
                 + Add Certificate
               </button>
@@ -403,7 +403,7 @@ export const WorkExperience: React.FC<WorkExperienceProps> = ({ data = [], updat
       <button
         type="button"
         onClick={addEntry}
-        className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
+        className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
       >
         Add Work Experience
       </button>
