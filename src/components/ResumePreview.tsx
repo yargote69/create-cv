@@ -152,7 +152,7 @@ export const ResumePreview: React.FC<ResumePreviewProps> = ({ data, onBack }) =>
         <button
           type="button"
           onClick={onBack}
-          className="text-gray-600 hover:text-gray-800"
+          className="text-gray-600 hover:text-gray-800 px-4 py-2 rounded-md bg-gray-100 border border-gray-200 hover:bg-gray-200"
           aria-label="Back to editor"
         >
           Back to Editor
@@ -167,10 +167,10 @@ export const ResumePreview: React.FC<ResumePreviewProps> = ({ data, onBack }) =>
         </button>
       </div>
 
-      <article 
-        id="resume-preview" 
+      <article
+        id="resume-preview"
         className="bg-white p-8 max-w-[816px] mx-auto"
-        itemScope 
+        itemScope
         itemType="http://schema.org/Resume"
       >
         <header className="text-center mb-8">
@@ -201,10 +201,10 @@ export const ResumePreview: React.FC<ResumePreviewProps> = ({ data, onBack }) =>
             Experiencia Profesional
           </h2>
           {data.experience.map((exp) => (
-            <div 
+            <div
               key={`${exp.title}-${exp.company || 'no-company'}-${exp.startDate}`}
               className="mb-6"
-              itemScope 
+              itemScope
               itemType="http://schema.org/WorkPosition"
             >
               <div className="flex justify-between items-baseline mb-1">
@@ -221,7 +221,7 @@ export const ResumePreview: React.FC<ResumePreviewProps> = ({ data, onBack }) =>
                   {exp.location && <div itemProp="location">{exp.location}</div>}
                   <div>
                     <time itemProp="startDate">{exp.startDate}</time>
-                    {exp.endDate && !exp.current && 
+                    {exp.endDate && !exp.current &&
                       <time itemProp="endDate">–{exp.endDate}</time>
                     }
                     {exp.current && "–Present"}
@@ -247,10 +247,10 @@ export const ResumePreview: React.FC<ResumePreviewProps> = ({ data, onBack }) =>
             Educación
           </h2>
           {data.education.map((edu) => (
-            <div 
+            <div
               key={`${edu.degree}-${edu.institution || 'no-institution'}-${edu.startDate}`}
               className="mb-4"
-              itemScope 
+              itemScope
               itemType="http://schema.org/EducationalOccupationalProgram"
             >
               <div className="flex justify-between items-baseline">
@@ -266,7 +266,7 @@ export const ResumePreview: React.FC<ResumePreviewProps> = ({ data, onBack }) =>
                   {edu.location && <div>{edu.location}</div>}
                   <div>
                     <time itemProp="startDate">{edu.startDate}</time>
-                    {edu.endDate && !edu.current && 
+                    {edu.endDate && !edu.current &&
                       <time itemProp="endDate">–{edu.endDate}</time>
                     }
                     {edu.current && "–Present"}
