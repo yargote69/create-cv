@@ -152,7 +152,7 @@ export const ResumePreview: React.FC<ResumePreviewProps> = ({ data, onBack }) =>
         <button
           type="button"
           onClick={onBack}
-          className="text-gray-600 hover:text-gray-800 px-4 py-2 rounded-md bg-gray-100 border border-gray-200 hover:bg-gray-200"
+          className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50"
           aria-label="Back to editor"
         >
           Back to Editor
