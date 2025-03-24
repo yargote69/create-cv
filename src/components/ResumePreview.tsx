@@ -104,7 +104,6 @@ export const ResumePreview: React.FC<ResumePreviewProps> = ({ data, onBack }) =>
         <!DOCTYPE html>
         <html>
           <head>
-            <title>Resume</title>
             <style>
               ${styles}
               @media print {
@@ -116,6 +115,11 @@ export const ResumePreview: React.FC<ResumePreviewProps> = ({ data, onBack }) =>
                 #resume-preview {
                   box-shadow: none;
                   padding: 0;
+                }
+                @page {
+                  margin-top: 0;
+                  margin-bottom: 0;
+                  size: auto;
                 }
               }
             </style>
