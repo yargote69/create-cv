@@ -169,66 +169,64 @@ export const ResumePreview: React.FC<ResumePreviewProps> = ({ data, onBack }) =>
 
       <article 
         id="resume-preview" 
-        className="bg-white p-8 rounded-lg shadow-lg max-w-4xl mx-auto"
+        className="bg-white p-8 max-w-[816px] mx-auto"
         itemScope 
         itemType="http://schema.org/Resume"
       >
-        <header className="mb-6">
+        <header className="text-center mb-8">
           <h1 className="text-3xl font-bold mb-2" itemProp="name">
             {data.personal.firstName} {data.personal.lastName}
           </h1>
-          <div className="text-gray-600 space-y-1">
+          <div className="text-sm" itemProp="contactPoint">
+            {data.personal.location && <span itemProp="address">{data.personal.location}</span>}
+            {data.personal.location && (data.personal.email || data.personal.phone) && <span> · </span>}
             {data.personal.email && (
-              <div itemProp="email">
-                <span className="sr-only">Email: </span>
+              <a href={`mailto:${data.personal.email}`} className="text-blue-600 hover:underline" itemProp="email">
                 {data.personal.email}
-              </div>
+              </a>
             )}
-            {data.personal.phone && (
-              <div itemProp="telephone">
-                <span className="sr-only">Phone: </span>
-                {data.personal.phone}
-              </div>
-            )}
-            {data.personal.location && (
-              <div itemProp="address">
-                <span className="sr-only">Location: </span>
-                {data.personal.location}
-              </div>
-            )}
+            {data.personal.email && data.personal.phone && <span> · </span>}
+            {data.personal.phone && <span itemProp="telephone">{data.personal.phone}</span>}
           </div>
         </header>
 
-        <section className="mb-6" aria-label="Professional Summary">
-          <h2 className="text-xl font-semibold mb-3">Professional Summary</h2>
-          <p itemProp="description">{data.summary}</p>
-        </section>
+        {data.summary && (
+          <section className="mb-6" aria-label="Professional Summary">
+            <p className="italic" itemProp="description">{data.summary}</p>
+          </section>
+        )}
 
         <section className="mb-6" aria-label="Work Experience">
-          <h2 className="text-xl font-semibold mb-3">Experience</h2>
+          <h2 className="text-lg font-bold uppercase border-b border-gray-300 mb-4 pb-1">
+            Experiencia Profesional
+          </h2>
           {data.experience.map((exp) => (
             <div 
               key={`${exp.title}-${exp.company || 'no-company'}-${exp.startDate}`}
-              className="mb-4"
+              className="mb-6"
               itemScope 
               itemType="http://schema.org/WorkPosition"
             >
-              <h3 className="font-semibold" itemProp="jobTitle">{exp.title}</h3>
-              {exp.company && (
-                <div itemProp="worksFor" itemScope itemType="http://schema.org/Organization">
-                  <span itemProp="name">{exp.company}</span>
-                  {exp.companyUrl && (
-                    <link itemProp="url" href={exp.companyUrl} />
+              <div className="flex justify-between items-baseline mb-1">
+                <div>
+                  <h3 className="font-bold inline" itemProp="jobTitle">{exp.title}</h3>
+                  {exp.company && (
+                    <div className="inline" itemProp="worksFor" itemScope itemType="http://schema.org/Organization">
+                      <span itemProp="name"> · {exp.company}</span>
+                      {exp.companyUrl && <link itemProp="url" href={exp.companyUrl} />}
+                    </div>
                   )}
                 </div>
-              )}
-              <div className="text-gray-600">
-                <time itemProp="startDate">{exp.startDate}</time>
-                {exp.endDate && !exp.current && 
-                  <time itemProp="endDate"> - {exp.endDate}</time>
-                }
-                {exp.current && " - Present"}
-                {exp.location && ` | ${exp.location}`}
+                <div className="text-right">
+                  {exp.location && <div itemProp="location">{exp.location}</div>}
+                  <div>
+                    <time itemProp="startDate">{exp.startDate}</time>
+                    {exp.endDate && !exp.current && 
+                      <time itemProp="endDate">–{exp.endDate}</time>
+                    }
+                    {exp.current && "–Present"}
+                  </div>
+                </div>
               </div>
               {exp.description && (
                 <p className="mt-2" itemProp="description">{exp.description}</p>
@@ -236,7 +234,7 @@ export const ResumePreview: React.FC<ResumePreviewProps> = ({ data, onBack }) =>
               {exp.achievements && exp.achievements.length > 0 && (
                 <ul className="list-disc list-inside mt-2">
                   {exp.achievements.map((achievement) => (
-                    <li key={`${achievement.substring(0, 20)}`}>{achievement}</li>
+                    <li key={`${achievement.substring(0, 20)}`} className="mb-1">{achievement}</li>
                   ))}
                 </ul>
               )}
@@ -245,7 +243,9 @@ export const ResumePreview: React.FC<ResumePreviewProps> = ({ data, onBack }) =>
         </section>
 
         <section className="mb-6" aria-label="Education">
-          <h2 className="text-xl font-semibold mb-3">Education</h2>
+          <h2 className="text-lg font-bold uppercase border-b border-gray-300 mb-4 pb-1">
+            Educación
+          </h2>
           {data.education.map((edu) => (
             <div 
               key={`${edu.degree}-${edu.institution || 'no-institution'}-${edu.startDate}`}
@@ -253,19 +253,25 @@ export const ResumePreview: React.FC<ResumePreviewProps> = ({ data, onBack }) =>
               itemScope 
               itemType="http://schema.org/EducationalOccupationalProgram"
             >
-              <h3 className="font-semibold" itemProp="programName">{edu.degree}</h3>
-              {edu.institution && (
-                <div itemProp="provider" itemScope itemType="http://schema.org/EducationalOrganization">
-                  <span itemProp="name">{edu.institution}</span>
+              <div className="flex justify-between items-baseline">
+                <div>
+                  <h3 className="font-bold" itemProp="programName">{edu.degree}</h3>
+                  {edu.institution && (
+                    <div itemProp="provider" itemScope itemType="http://schema.org/EducationalOrganization">
+                      <span itemProp="name">{edu.institution}</span>
+                    </div>
+                  )}
                 </div>
-              )}
-              <div className="text-gray-600">
-                <time itemProp="startDate">{edu.startDate}</time>
-                {edu.endDate && !edu.current && 
-                  <time itemProp="endDate"> - {edu.endDate}</time>
-                }
-                {edu.current && " - Present"}
-                {edu.location && ` | ${edu.location}`}
+                <div className="text-right">
+                  {edu.location && <div>{edu.location}</div>}
+                  <div>
+                    <time itemProp="startDate">{edu.startDate}</time>
+                    {edu.endDate && !edu.current && 
+                      <time itemProp="endDate">–{edu.endDate}</time>
+                    }
+                    {edu.current && "–Present"}
+                  </div>
+                </div>
               </div>
               {edu.description && (
                 <p className="mt-2" itemProp="description">{edu.description}</p>
@@ -274,33 +280,29 @@ export const ResumePreview: React.FC<ResumePreviewProps> = ({ data, onBack }) =>
           ))}
         </section>
 
-        <section className="mb-6" aria-label="Skills">
-          <h2 className="text-xl font-semibold mb-3">Skills</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div>
-              <h3 className="font-semibold mb-2">Technical Skills</h3>
-              <ul className="list-disc list-inside">
-                {data.skills.technical.map((skill) => (
-                  <li key={`tech-${skill}`} itemProp="knowsAbout">{skill}</li>
-                ))}
-              </ul>
-            </div>
-            <div>
-              <h3 className="font-semibold mb-2">Soft Skills</h3>
-              <ul className="list-disc list-inside">
-                {data.skills.soft.map((skill) => (
-                  <li key={`soft-${skill}`} itemProp="knowsAbout">{skill}</li>
-                ))}
-              </ul>
-            </div>
-            <div>
-              <h3 className="font-semibold mb-2">Languages</h3>
-              <ul className="list-disc list-inside">
-                {data.skills.languages.map((language) => (
-                  <li key={`lang-${language}`} itemProp="knowsLanguage">{language}</li>
-                ))}
-              </ul>
-            </div>
+        <section className="mb-6" aria-label="Additional Skills">
+          <h2 className="text-lg font-bold uppercase border-b border-gray-300 mb-4 pb-1">
+            Skills Adicionales
+          </h2>
+          <div className="space-y-2">
+            {data.skills.technical.length > 0 && (
+              <div>
+                <h3 className="font-bold inline">Technical: </h3>
+                <span itemProp="knowsAbout">{data.skills.technical.join(', ')}</span>
+              </div>
+            )}
+            {data.skills.soft.length > 0 && (
+              <div>
+                <h3 className="font-bold inline">Soft Skills: </h3>
+                <span itemProp="knowsAbout">{data.skills.soft.join(', ')}</span>
+              </div>
+            )}
+            {data.skills.languages.length > 0 && (
+              <div>
+                <h3 className="font-bold inline">Languages: </h3>
+                <span itemProp="knowsLanguage">{data.skills.languages.join(', ')}</span>
+              </div>
+            )}
           </div>
         </section>
       </article>
