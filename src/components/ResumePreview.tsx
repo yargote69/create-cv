@@ -152,173 +152,158 @@ export const ResumePreview: React.FC<ResumePreviewProps> = ({ data, onBack }) =>
         <button
           type="button"
           onClick={onBack}
-          className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50"
+          className="text-gray-600 hover:text-gray-800"
+          aria-label="Back to editor"
         >
-          Back to Edit
+          Back to Editor
         </button>
         <button
           type="button"
           onClick={handleDownload}
-          className="px-4 py-2 text-sm font-medium text-white bg-blue-600 border border-transparent rounded-md shadow-sm hover:bg-blue-700"
+          className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+          aria-label="Download Resume"
         >
-          Download PDF
+          Download Resume
         </button>
       </div>
 
-      <div id="resume-preview" className="bg-white p-8 shadow-lg max-w-[816px] mx-auto">
-        {/* Header */}
-        <div className="text-center mb-6">
-          <h1 className="text-2xl font-bold uppercase tracking-wider">
+      <article 
+        id="resume-preview" 
+        className="bg-white p-8 rounded-lg shadow-lg max-w-4xl mx-auto"
+        itemScope 
+        itemType="http://schema.org/Resume"
+      >
+        <header className="mb-6">
+          <h1 className="text-3xl font-bold mb-2" itemProp="name">
             {data.personal.firstName} {data.personal.lastName}
           </h1>
-          <div className="text-sm mt-2 space-x-2">
-            {data.personal.email && <span>{data.personal.email}</span>}
-            {data.personal.phone && <span>• {data.personal.phone}</span>}
-            {data.personal.location && <span>• {data.personal.location}</span>}
+          <div className="text-gray-600 space-y-1">
+            {data.personal.email && (
+              <div itemProp="email">
+                <span className="sr-only">Email: </span>
+                {data.personal.email}
+              </div>
+            )}
+            {data.personal.phone && (
+              <div itemProp="telephone">
+                <span className="sr-only">Phone: </span>
+                {data.personal.phone}
+              </div>
+            )}
+            {data.personal.location && (
+              <div itemProp="address">
+                <span className="sr-only">Location: </span>
+                {data.personal.location}
+              </div>
+            )}
           </div>
-        </div>
+        </header>
 
-        {/* Professional Summary */}
-        {data.summary && (
-          <div className="mb-6">
-            <h2 className="text-lg font-bold uppercase border-b-2 border-gray-300 mb-2 pb-1">Professional Summary</h2>
-            <p className="text-sm">{data.summary}</p>
-          </div>
-        )}
+        <section className="mb-6" aria-label="Professional Summary">
+          <h2 className="text-xl font-semibold mb-3">Professional Summary</h2>
+          <p itemProp="description">{data.summary}</p>
+        </section>
 
-        {/* Experience */}
-        {data.experience.length > 0 && (
-          <div className="mb-6">
-            <h2 className="text-lg font-bold uppercase border-b-2 border-gray-300 mb-2 pb-1">Experience</h2>
-            {data.experience.map((exp) => (
-              <div key={`${exp.title}-${exp.company || 'no-company'}`} className="mb-4">
-                <div className="flex justify-between items-baseline">
-                  <div>
-                    <span className="font-bold">{exp.title}</span>
-                    {exp.company && (
-                      <span className="font-semibold">
-                        {' '}
-                        at{' '}
-                        {exp.companyUrl ? (
-                          <a href={exp.companyUrl} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">
-                            {exp.company}
-                          </a>
-                        ) : (
-                          exp.company
-                        )}
-                      </span>
-                    )}
-                  </div>
-                  <div className="text-sm">
-                    {exp.startDate} - {exp.current ? 'Present' : exp.endDate}
-                  </div>
+        <section className="mb-6" aria-label="Work Experience">
+          <h2 className="text-xl font-semibold mb-3">Experience</h2>
+          {data.experience.map((exp) => (
+            <div 
+              key={`${exp.title}-${exp.company || 'no-company'}-${exp.startDate}`}
+              className="mb-4"
+              itemScope 
+              itemType="http://schema.org/WorkPosition"
+            >
+              <h3 className="font-semibold" itemProp="jobTitle">{exp.title}</h3>
+              {exp.company && (
+                <div itemProp="worksFor" itemScope itemType="http://schema.org/Organization">
+                  <span itemProp="name">{exp.company}</span>
+                  {exp.companyUrl && (
+                    <link itemProp="url" href={exp.companyUrl} />
+                  )}
                 </div>
-                {exp.location && <div className="text-sm italic">{exp.location}</div>}
-                {exp.description && <p className="text-sm mt-1">{exp.description}</p>}
-
-                {/* Achievements */}
-                {exp.achievements && exp.achievements.length > 0 && (
-                  <ul className="list-disc list-inside mt-2 text-sm">
-                    {exp.achievements.map((achievement) => (
-                      <li key={`achievement-${achievement}`} className="mb-1">{achievement}</li>
-                    ))}
-                  </ul>
-                )}
-
-                {/* Projects */}
-                {exp.projects && exp.projects.length > 0 && (
-                  <div className="mt-2">
-                    <h4 className="text-sm font-semibold">Key Projects:</h4>
-                    <ul className="list-disc list-inside text-sm">
-                      {exp.projects.map((project) => (
-                        <li key={`project-${project.name}`} className="mb-1">
-                          {project.url ? (
-                            <a href={project.url} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">
-                              {project.name}
-                            </a>
-                          ) : (
-                            project.name
-                          )}
-                          {project.description && `: ${project.description}`}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
-
-                {/* Certificates */}
-                {exp.certificates && exp.certificates.length > 0 && (
-                  <div className="mt-2">
-                    <h4 className="text-sm font-semibold">Certificates:</h4>
-                    <ul className="list-disc list-inside text-sm">
-                      {exp.certificates.map((cert) => (
-                        <li key={`cert-${cert.name}`} className="mb-1">
-                          {cert.url ? (
-                            <a href={cert.url} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">
-                              {cert.name}
-                            </a>
-                          ) : (
-                            cert.name
-                          )}
-                          {cert.issuer && ` - ${cert.issuer}`}
-                          {cert.date && ` (${cert.date})`}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
+              )}
+              <div className="text-gray-600">
+                <time itemProp="startDate">{exp.startDate}</time>
+                {exp.endDate && !exp.current && 
+                  <time itemProp="endDate"> - {exp.endDate}</time>
+                }
+                {exp.current && " - Present"}
+                {exp.location && ` | ${exp.location}`}
               </div>
-            ))}
-          </div>
-        )}
+              {exp.description && (
+                <p className="mt-2" itemProp="description">{exp.description}</p>
+              )}
+              {exp.achievements && exp.achievements.length > 0 && (
+                <ul className="list-disc list-inside mt-2">
+                  {exp.achievements.map((achievement) => (
+                    <li key={`${achievement.substring(0, 20)}`}>{achievement}</li>
+                  ))}
+                </ul>
+              )}
+            </div>
+          ))}
+        </section>
 
-        {/* Education */}
-        {data.education.length > 0 && (
-          <div className="mb-6">
-            <h2 className="text-lg font-bold uppercase border-b-2 border-gray-300 mb-2 pb-1">Education</h2>
-            {data.education.map((edu) => (
-              <div key={`${edu.degree}-${edu.institution || 'no-institution'}`} className="mb-4">
-                <div className="flex justify-between items-baseline">
-                  <div>
-                    <span className="font-bold">{edu.degree}</span>
-                    {edu.institution && <span className="font-semibold">, {edu.institution}</span>}
-                  </div>
-                  <div className="text-sm">
-                    {edu.startDate} - {edu.current ? 'Present' : edu.endDate}
-                  </div>
+        <section className="mb-6" aria-label="Education">
+          <h2 className="text-xl font-semibold mb-3">Education</h2>
+          {data.education.map((edu) => (
+            <div 
+              key={`${edu.degree}-${edu.institution || 'no-institution'}-${edu.startDate}`}
+              className="mb-4"
+              itemScope 
+              itemType="http://schema.org/EducationalOccupationalProgram"
+            >
+              <h3 className="font-semibold" itemProp="programName">{edu.degree}</h3>
+              {edu.institution && (
+                <div itemProp="provider" itemScope itemType="http://schema.org/EducationalOrganization">
+                  <span itemProp="name">{edu.institution}</span>
                 </div>
-                {edu.location && <div className="text-sm italic">{edu.location}</div>}
-                {edu.description && <p className="text-sm mt-1">{edu.description}</p>}
+              )}
+              <div className="text-gray-600">
+                <time itemProp="startDate">{edu.startDate}</time>
+                {edu.endDate && !edu.current && 
+                  <time itemProp="endDate"> - {edu.endDate}</time>
+                }
+                {edu.current && " - Present"}
+                {edu.location && ` | ${edu.location}`}
               </div>
-            ))}
-          </div>
-        )}
+              {edu.description && (
+                <p className="mt-2" itemProp="description">{edu.description}</p>
+              )}
+            </div>
+          ))}
+        </section>
 
-        {/* Skills */}
-        <div className="mb-6">
-          <h2 className="text-lg font-bold uppercase border-b-2 border-gray-300 mb-2 pb-1">Skills</h2>
-          <div className="grid grid-cols-1 gap-4">
-            {data.skills.technical.length > 0 && (
-              <div>
-                <span className="font-bold">Technical Skills: </span>
-                <span className="text-sm">{data.skills.technical.join(', ')}</span>
-              </div>
-            )}
-            {data.skills.soft.length > 0 && (
-              <div>
-                <span className="font-bold">Soft Skills: </span>
-                <span className="text-sm">{data.skills.soft.join(', ')}</span>
-              </div>
-            )}
-            {data.skills.languages.length > 0 && (
-              <div>
-                <span className="font-bold">Languages: </span>
-                <span className="text-sm">{data.skills.languages.join(', ')}</span>
-              </div>
-            )}
+        <section className="mb-6" aria-label="Skills">
+          <h2 className="text-xl font-semibold mb-3">Skills</h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div>
+              <h3 className="font-semibold mb-2">Technical Skills</h3>
+              <ul className="list-disc list-inside">
+                {data.skills.technical.map((skill) => (
+                  <li key={`tech-${skill}`} itemProp="knowsAbout">{skill}</li>
+                ))}
+              </ul>
+            </div>
+            <div>
+              <h3 className="font-semibold mb-2">Soft Skills</h3>
+              <ul className="list-disc list-inside">
+                {data.skills.soft.map((skill) => (
+                  <li key={`soft-${skill}`} itemProp="knowsAbout">{skill}</li>
+                ))}
+              </ul>
+            </div>
+            <div>
+              <h3 className="font-semibold mb-2">Languages</h3>
+              <ul className="list-disc list-inside">
+                {data.skills.languages.map((language) => (
+                  <li key={`lang-${language}`} itemProp="knowsLanguage">{language}</li>
+                ))}
+              </ul>
+            </div>
           </div>
-        </div>
-      </div>
+        </section>
+      </article>
     </div>
   );
 };
