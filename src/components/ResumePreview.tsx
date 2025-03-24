@@ -213,7 +213,14 @@ export const ResumePreview: React.FC<ResumePreviewProps> = ({ data, onBack }) =>
                   {exp.company && (
                     <div className="inline" itemProp="worksFor" itemScope itemType="http://schema.org/Organization">
                       <span itemProp="name"> · {exp.company}</span>
-                      {exp.companyUrl && <link itemProp="url" href={exp.companyUrl} />}
+                      {exp.companyUrl && (
+                        <>
+                          <span> · </span>
+                          <a href={exp.companyUrl} className="text-blue-600 hover:underline" target="_blank" rel="noopener noreferrer" itemProp="url">
+                            Website
+                          </a>
+                        </>
+                      )}
                     </div>
                   )}
                 </div>
@@ -237,6 +244,49 @@ export const ResumePreview: React.FC<ResumePreviewProps> = ({ data, onBack }) =>
                     <li key={`${achievement.substring(0, 20)}`} className="mb-1">{achievement}</li>
                   ))}
                 </ul>
+              )}
+              {exp.projects && exp.projects.length > 0 && (
+                <div className="mt-2">
+                  <h4 className="font-semibold">Projects:</h4>
+                  <ul className="list-disc list-inside">
+                    {exp.projects.map((project) => (
+                      <li key={project.name} className="mb-1">
+                        {project.name}
+                        {project.url && (
+                          <>
+                            <span> · </span>
+                            <a href={project.url} className="text-blue-600 hover:underline" target="_blank" rel="noopener noreferrer">
+                              View Project
+                            </a>
+                          </>
+                        )}
+                        {project.description && <div className="ml-4">{project.description}</div>}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+              {exp.certificates && exp.certificates.length > 0 && (
+                <div className="mt-2">
+                  <h4 className="font-semibold">Certificates:</h4>
+                  <ul className="list-disc list-inside">
+                    {exp.certificates.map((cert) => (
+                      <li key={cert.name} className="mb-1">
+                        {cert.name}
+                        {cert.url && (
+                          <>
+                            <span> · </span>
+                            <a href={cert.url} className="text-blue-600 hover:underline" target="_blank" rel="noopener noreferrer">
+                              View Certificate
+                            </a>
+                          </>
+                        )}
+                        {cert.issuer && <span> · {cert.issuer}</span>}
+                        {cert.date && <span> · {cert.date}</span>}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               )}
             </div>
           ))}
